@@ -1,3 +1,148 @@
-h1{
-    color: red;
+html,body{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    background: #4b636e;
+}
+
+*{
+    font-family: sans-serif;
+    font-weight: 300;
+}
+
+.hero{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.box{
+    width: 600px;
+    height: 270px;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    animation: 1s showUp 1 ease-in-out;
+}
+
+.box h1{
+
+    color: rgb(175, 175, 175);
+    text-align: left;
+    text-transform: uppercase;
+    width: 200px;
+    font-weight: bold;
+    font-size: 3rem;
+    animation: 3s leftText ease;
+
+}
+
+.box p{
+
+    color: rgb(138, 138, 138);
+    width: 200px;
+    text-align: left;
+    padding-left: 30px;
+    animation: 3s leftText ease;
+
+}
+
+.hero .container{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    animation: showUpCounting 3s 1 ease-in;
+}
+.hero h2{
+
+    color: rgb(175, 175, 175);
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: bold;
+
+}
+
+.hero .container button{
+    outline: none;
+    border: none;
+    color: rgb(151, 151, 151);
+    padding: 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    background: linear-gradient(to right,rgba(0, 0, 0, 0.5),rgba(8, 8, 8, 0.7));
+}
+
+.hero hr{
+    width: 300px;
+    outline: none;
+    border-color: rgba(151, 151, 151,0.2);
+}
+
+@keyframes showUp{
+    0%{
+        height: 0px;
+        overflow: hidden;
+        padding:0px;
+        transform: rotate(45deg);
+    }
+
+    100%{
+        height: 270px;
+        overflow: hidden;
+        padding: 20px;
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes showUpCounting{
+    0%{
+        height: 0px;
+        overflow: hidden;
+
+    }
+
+    100%{
+        height: 150px;
+        overflow: hidden;
+
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+@keyframes leftText{
+    0%{
+
+        opacity: 0.0;
+        width: 0px;
+        overflow-x: hidden;
+
+    }
+    100%{
+
+        opacity: 1.0;
+        width: 200px;
+        overflow-x: auto;
+
+    }
 }

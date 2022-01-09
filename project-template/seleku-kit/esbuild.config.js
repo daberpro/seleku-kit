@@ -1,17 +1,36 @@
 const { dabComPlugin } = require("dabcom/vite-plugin/plugin.js");
 
-require('esbuild').serve({
-    servedir: 'dist',
-    port: 8000
-  },{
+const consoleArgument = process.argv.slice(2)[0];
+
+const config = {
     entryPoints: ['main.js'],
     bundle: true,
-    outdir:"dist",
+    outdir: "dist",
     plugins: [dabComPlugin],
     platform: "browser",
     loader: {
         ".js": "js",
-        ".css": "css"
+        ".css": "css",
+        '.svg': 'text'
     },
     entryNames: '[name]-bundle',
-  }).catch(() => process.exit(1))
+}
+
+const configServer= {
+    servedir: 'dist',
+    port: 8000
+}
+
+if (consoleArgument === "--development") {
+
+    require('esbuild').serve(configServer, config).catch(() => process.exit(1))
+
+    console.log("server running on port "+configServer.port);
+
+}
+
+if(consoleArgument === "--production"){
+
+    require('esbuild').build(config).catch(() => process.exit(1))
+
+}

@@ -78,9 +78,7 @@ inquirer.prompt(QUESTIONS)
     if (!createProject(tartgetPath)) {
         return;
     }
-
-    //@ts-ignore
     createDirectoryContents(templatePath, projectName);
 
-   
+   console.log(chalk.bold.green("\n\trun this command for setup your project \n\tcd "+projectName),"\n",chalk.bold.green("\tthen run 'npm run i'"),"\n",chalk.bold.green("\tand then 'npm run dev'"));
 });

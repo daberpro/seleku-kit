@@ -38,6 +38,8 @@
 
   // node_modules/dabcom/res/dabMainClass.js
   var Main = class {
+    #allComponentId = {};
+    #kindOfComponentBindingData = {};
     createRawComponent(name, attribute) {
       return {
         name,
@@ -46,7 +48,8 @@
         parentComponent: attribute?.parentComponent,
         positionComponent: attribute?.positionComponent,
         state: attribute?.state || {},
-        event: attribute?.event || {}
+        event: attribute?.event || {},
+        id: attribute?.id
       };
     }
     createComponent(rawComponent) {
@@ -58,11 +61,6 @@
       }
       const textNode = document.createTextNode(rawComponent?.content);
       element.appendChild(textNode);
-      if (rawComponent?.event instanceof Object) {
-        for (let x in rawComponent?.event) {
-          element[x] = rawComponent?.event[x];
-        }
-      }
       return {
         element,
         content: textNode,
@@ -70,6 +68,7 @@
         parent: rawComponent.parentComponent,
         position: rawComponent.positionComponent,
         state: rawComponent?.state,
+        event: rawComponent?.event,
         destroy(onDestroy = () => {
         }) {
           onDestroy();
@@ -87,13 +86,46 @@
     renderComponent(StackRawComponent, target) {
       const StackComponent = [];
       let State = {};
-      let kindOfComponentBindingData = {};
+      const kindOfComponentBindingData = this.#kindOfComponentBindingData;
       for (let x of StackRawComponent) {
         const componentCreated = this.createComponent(x);
         State = {
           ...State,
           ...componentCreated.state
         };
+        if (x?.id) {
+          this.#allComponentId[x?.id] = {
+            ...componentCreated,
+            state: new Reactivity({
+              Getter(object, propertyName) {
+                return object[propertyName];
+              },
+              Setter(object, propertyName, valueSet) {
+                for (let x2 of kindOfComponentBindingData[propertyName]) {
+                  x2.state[propertyName] = valueSet;
+                  x2.updateTextNode();
+                }
+              }
+            }).setReactive(State)
+          };
+        }
+        if (x?.event instanceof Object) {
+          for (let y in x?.event) {
+            componentCreated.element[y] = () => x?.event[y]({
+              state: new Reactivity({
+                Getter(object, propertyName) {
+                  return object[propertyName];
+                },
+                Setter(object, propertyName, valueSet) {
+                  for (let x2 of kindOfComponentBindingData[propertyName]) {
+                    x2.state[propertyName] = valueSet;
+                    x2.updateTextNode();
+                  }
+                }
+              }).setReactive(State)
+            });
+          }
+        }
         for (let y of Object.keys(componentCreated.state)) {
           if (kindOfComponentBindingData[y] instanceof Array) {
             kindOfComponentBindingData[y].push(componentCreated);
@@ -142,10 +174,16 @@
     replaceChild(newComponent, oldComponent) {
       oldComponent.parentElement.replaceChild(newComponent.element, oldComponent);
     }
+    findById(id) {
+      return this.#allComponentId[id];
+    }
   };
 
   // node_modules/dabcom/res/dabMain.js
   var dabMain = new Main();
+  function findById(id) {
+    return dabMain.findById(id);
+  }
   function Render(Component, target) {
     return {
       ...dabMain.renderComponent(Component, target),
@@ -159,17 +197,95 @@
   // main.js
   function Welcome() {
     return [dabMain.createRawComponent(`div`, {
-      content: "`                            `",
+      content: "`                                    `",
       parentComponent: "",
-      positionComponent: "5ekx5feh",
+      positionComponent: "7wete3v4",
       state: {},
-      event: {}
+      event: {},
+      attribute: {
+        "class": "hero"
+      },
+      id: ""
+    }), ...svg({
+      "height": "100%",
+      "width": "100%",
+      "parentComponent": "7wete3v4",
+      "positionComponent": "o8lw44b"
+    }), ...circle({
+      "cx": "50",
+      "cy": "50",
+      "r": "300",
+      "stroke": "black",
+      "stroke-width": "3",
+      "fill": "red",
+      "parentComponent": "o8lw44b",
+      "positionComponent": "kkriq8dp"
+    }), dabMain.createRawComponent(`div`, {
+      content: "`                                `",
+      parentComponent: "7wete3v4",
+      positionComponent: "5ea2njzg",
+      state: {},
+      event: {},
+      attribute: {
+        "class": "box"
+      },
+      id: ""
     }), dabMain.createRawComponent(`h1`, {
-      content: "`hello world`",
-      parentComponent: "5ekx5feh",
-      positionComponent: "ab6ya6yj",
+      content: "`hello Seleku-kit`",
+      parentComponent: "5ea2njzg",
+      positionComponent: "1cigrkd5",
       state: {},
-      event: {}
+      event: {},
+      attribute: {},
+      id: ""
+    }), dabMain.createRawComponent(`p`, {
+      content: "`                seleku-kit adalah generasi selanjutnya dari                seleku dan ini merupakan framework yang sangat sederhana                dan lebih cepat dari sebelumnya            `",
+      parentComponent: "5ea2njzg",
+      positionComponent: "58pttcr1",
+      state: {},
+      event: {},
+      attribute: {},
+      id: ""
+    }), dabMain.createRawComponent(`hr`, {
+      content: "``",
+      parentComponent: "7wete3v4",
+      positionComponent: "z4gzirj",
+      state: {},
+      event: {},
+      attribute: {},
+      id: ""
+    }), dabMain.createRawComponent(`div`, {
+      content: "`                                `",
+      parentComponent: "7wete3v4",
+      positionComponent: "3qin9kjl",
+      state: {},
+      event: {},
+      attribute: {
+        "class": "container"
+      },
+      id: ""
+    }), dabMain.createRawComponent(`h2`, {
+      content: "`Count ${this.state.count}`",
+      parentComponent: "3qin9kjl",
+      positionComponent: "arqtedbt",
+      state: {
+        count: 17
+      },
+      event: {},
+      attribute: {},
+      id: "counting"
+    }), dabMain.createRawComponent(`button`, {
+      content: "`Add count`",
+      parentComponent: "3qin9kjl",
+      positionComponent: "dl94678s",
+      state: {},
+      event: {
+        onclick: function() {
+          findById("counting").state.count++;
+        }
+      },
+      attribute: {},
+      id: ""
     })];
   }
   Render(Welcome({}), document.body);

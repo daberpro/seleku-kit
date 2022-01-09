@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node esbuild.config.js --development",
+    "build": "node esbuild.config.js --production"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dabcom": "^1.0.1",
-    "esbuild": "^0.14.10"
+    "dabcom": "^1.0.6",
+    "esbuild": "latest"
   }
 }
