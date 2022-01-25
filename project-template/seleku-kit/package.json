@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dabcom": "^1.0.6",
+    "dabcom": "latest",
     "esbuild": "latest"
   }
 }

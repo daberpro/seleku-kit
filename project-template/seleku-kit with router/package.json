@@ -1,0 +1,22 @@
+{
+  "name": "seleku-kit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "esbuild.config.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node server-development.js",
+    "build": "node esbuild.config.js --production"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "latest",
+    "dabcom": "1.0.11",
+    "esbuild": "latest",
+    "esbuild-sass-plugin": "^2.0.3",
+    "express": "latest",
+    "ip": "^1.1.5",
+    "nodemon": "latest"
+  }
+}

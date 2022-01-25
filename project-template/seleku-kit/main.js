@@ -1,7 +1,7 @@
 import { Render, dabMain, findById } from "dabcom/res/dabMain.js";
 import "./style.css";
 
-function Welcome({nama}) {
+function Welcome() {
 
     return <div class="hero">
         <div class="box">
@@ -25,4 +25,4 @@ function Welcome({nama}) {
 
 }
 
-Render(<Welcome nama="ari"></Welcome>, document.body);
+Render(<Welcome></Welcome>, document.body);
