@@ -3,8 +3,8 @@ import "./style.css";
 
 function Welcome() {
 
-    return <div class="hero">
-        <div class="box">
+    return <div class="'hero'">
+        <div class="'box'">
             <h1>hello Seleku-kit</h1>
             <p>
                 seleku-kit adalah generasi selanjutnya dari
@@ -13,7 +13,7 @@ function Welcome() {
             </p>
         </div>
         <hr></hr>
-        <div class='container'>
+        <div class="'container'">
             <h2 state="{{count: 17}}" component:id="counting">Count ${this.state.count}</h2>
             <button on:click="{function(){
                 findById('counting').state.count++;

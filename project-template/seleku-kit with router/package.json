@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "latest",
-    "dabcom": "1.0.11",
+    "dabcom": "latest",
     "esbuild": "latest",
     "esbuild-sass-plugin": "^2.0.3",
     "express": "latest",

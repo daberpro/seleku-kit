@@ -10,7 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 
 export const config = {
-    entryPoints: ['source/main.js'],
+    entryPoints: ['source/app.js'],
     bundle: true,
     outdir: "dist",
     plugins: [dabComPlugin, sassPlugin()],
@@ -31,13 +31,15 @@ if(args[0] === "--production"){
 
         (!fs.existsSync(__dirname+`/${Config.outDir}`))? fs.mkdirSync(__dirname+`/${Config.outDir}`) : 0;
         fs.copyFileSync(__dirname+`/${Config.mainServerFile}`,__dirname+`/${Config.outDir}/server.js`);
-        fs.copyFileSync(__dirname+`/${Config.html}`,__dirname+`/${Config.outDir}/${config.outdir}/index.html`);
-
+    
         config.outdir = `/${Config.outDir}/${config.outdir}`;
+        await build(config).catch(() => process.exit(1))
+        await fs.copyFileSync(__dirname+`/${Config.html}`,__dirname+`/${config.outdir}/index.html`);
 
     }
 
+}else{
+
+    build(config).catch(() => process.exit(1))
+
 }
-
-
-build(config).catch(() => process.exit(1))

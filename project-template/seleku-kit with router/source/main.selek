@@ -1,6 +1,6 @@
 import { Render, dabMain, findById } from "dabcom/res/dabMain.js";
 import { Router } from "dabcom/spa/route.js";
-import { Welcome } from "./component/welcome.js";
+import { Welcome } from "./component/welcome.selek";
 import "./style.scss";
 
 <Router.route

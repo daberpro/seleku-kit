@@ -3,7 +3,7 @@ const { dabComPlugin } = require("dabcom/vite-plugin/plugin.js");
 const consoleArgument = process.argv.slice(2)[0];
 
 const config = {
-    entryPoints: ['main.js'],
+    entryPoints: ['app.js'],
     bundle: true,
     outdir: "dist",
     plugins: [dabComPlugin],
